@@ -68,6 +68,16 @@ live:()=>`
     <p>${state.session?"Orders are being stored locally on this PC. You can continue recording even if the internet/server connection drops.":"Start a session to begin capturing buyers. Demo Feed lets you test the workflow before connecting TikTok."}</p>
     ${state.session?`<button class="secondary" id="finishBtn">Finish Session</button>`:`<button class="primary" id="startBtn">Start Live Session</button>`}
   </div>
+  <div class="card">
+  <h2>TikTok LIVE Checker</h2>
+  <div class="form">
+    <label>TikTok Username
+      <input id="tiktokUsername" placeholder="@username">
+    </label>
+    <button class="primary" id="checkTikTokBtn">Check LIVE</button>
+  </div>
+  <div id="tiktokLiveResult" class="notice">Enter a TikTok username to check.</div>
+</div>
   <div class="grid three">
     <div class="card"><div class="muted">Orders</div><div class="metric">${state.session?.orders||0}</div><span class="pill green">Local</span></div>
     <div class="card"><div class="muted">Live value</div><div class="metric">${money(state.session?.total||0)}</div><span class="pill pink">SAR</span></div>
@@ -153,7 +163,35 @@ function bind(){
       const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="tagasulat-backup.json"; a.click();
       setTimeout(()=>URL.revokeObjectURL(a.href),1000); toast("Backup downloaded");
     }
-  });
+  });document.getElementById("checkTikTokBtn")?.addEventListener("click",async()=>{
+  const username=document.getElementById("tiktokUsername").value.trim().replace(/^@/,"");
+  const result=document.getElementById("tiktokLiveResult");
+
+  if(!username){
+    result.textContent="Please enter a TikTok username.";
+    return;
+  }
+
+  result.textContent="Checking LIVE status...";
+
+  try{
+    const response=await fetch(
+      "https://tagasulat-tiktok.pennanimations.workers.dev/live?username="+encodeURIComponent(username)
+    );
+
+    const data=await response.json();
+
+    if(data.ok && data.live){
+      result.textContent="🟢 LIVE — @"+username+" is currently LIVE.";
+    }else if(data.ok){
+      result.textContent="🔴 OFFLINE — @"+username+" is not currently LIVE.";
+    }else{
+      result.textContent="⚠️ Unable to check this username.";
+    }
+  }catch(error){
+    result.textContent="⚠️ Connection error. Please try again.";
+  }
+});
   document.getElementById("clearBtn")?.addEventListener("click",()=>{if(confirm("Delete all local Tagasulat data?")){state=structuredClone(seed);save();render();}});
 }
 render();
