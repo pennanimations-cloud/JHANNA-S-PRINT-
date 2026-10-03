@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#142033" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Tagasulat — Live Selling Recorder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">Tagasulat</div>
+        <div class="brand-sub">LIVE SELLING RECORDER</div>
+      </div>
+      <button class="nav active" data-view="live">◉ <span>Live Session</span></button>
+      <button class="nav" data-view="buyers">♙ <span>Buyer Board</span></button>
+      <button class="nav" data-view="products">▦ <span>Products</span></button>
+      <button class="nav" data-view="keep">♡ <span>Keep Items</span></button>
+      <button class="nav" data-view="blacklist">⊘ <span>Blacklist</span></button>
+      <button class="nav" data-view="joy">✦ <span>Joy Miner</span></button>
+      <button class="nav" data-view="history">◷ <span>Session History</span></button>
+      <div class="sidebar-bottom">
+        <div class="connection"><span class="dot"></span> Local mode ready</div>
+        <button class="nav" data-view="settings">⚙ <span>Settings</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">TAGASULAT DESKTOP</div>
+          <h1 id="pageTitle">Live Session</h1>
+        </div>
+        <div class="top-actions">
+          <button class="secondary" id="demoBtn">Run Demo Feed</button>
+          <button class="primary" id="newSessionBtn">＋ New Session</button>
+        </div>
+      </header>
+
+      <section id="content"></section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="renderer.js"></script>
+  <script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+</body>
+</html>

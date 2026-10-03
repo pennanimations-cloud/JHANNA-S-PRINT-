@@ -1,0 +1,10 @@
+{
+  "name": "Tagasulat Live Selling Recorder",
+  "short_name": "Tagasulat",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#142033",
+  "orientation": "portrait",
+  "icons": []
+}
